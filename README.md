@@ -21,7 +21,7 @@ O Dev. Study Bot conta com vários comandos interativos para melhorar a experiê
 
 - **!soma `<número1>` `<número2>`**  
    Soma dois números fornecidos.  
-   Exemplo: `!soma 5 10`.
+   Exemplo: `!soma 6 10`.
 
 - **!hello**  
    O bot faz uma pequena apresentação sobre si mesmo e menciona seu criador.
