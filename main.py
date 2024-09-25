@@ -47,9 +47,9 @@ async def serverinfo(ctx):
 # Comando mencionando alguém específico
 @bot.command(name='test')
 async def mention_specific(ctx):
-    user_id = #ID do usuário
+    user_id = #ID do usuário;
     user = await bot.fetch_user(user_id)
-    await ctx.send(f'{user.mention} é legal!')
+    await ctx.send(f'O {user.mention} é legal!')
 
 # Rolar um dado
 @bot.command(name='dado')
