@@ -93,21 +93,28 @@ async def hello(ctx):
 @bot.command(name='comandos')
 async def comandos(ctx):
     message = (
-        "**Comandos Disponíveis:**\n\n"
-        "**1. !dado <lados>**\n"
-        "   Rola um dado com a quantidade de lados que você escolher. Por exemplo, `!dado 6` para um dado de 6 lados.\n\n"
-        "**2. !adivinhe <número>**\n"
-        "   O bot pensa em um número entre 1 e 10 e você deve acertar para ganhar. Por exemplo, `!adivinhe 5`.\n\n"
-        "**3. !serverinfo**\n"
-        "   Retorna o nome do servidor e o número de membros.\n\n"
-        "**4. !soma <número1> <número2>**\n"
-        "   Soma dois números que você escolher. Por exemplo, `!soma 5 10`.\n\n"
-        "**5. !hello**\n"
-        "   O bot faz uma pequena apresentação sobre ele mesmo.\n\n"
-        "**6. !servidor**\n"
+        "**Comandos Disponíveis do Bot Dev. Study**\n"
+        "```"
+        "1. !dado <lados>\n"
+        "   Rola um dado com a quantidade de lados que você escolher.\n"
+        "   Exemplo: !dado 6\n\n"
+        "2. !adivinhe <número>\n"
+        "   O bot pensa em um número entre 1 e 10, e você precisa adivinhar.\n"
+        "   Exemplo: !adivinhe 5\n\n"
+        "3. !serverinfo\n"
+        "   Exibe o nome do servidor e o número de membros.\n\n"
+        "4. !soma <número1> <número2>\n"
+        "   Soma dois números que você escolher.\n"
+        "   Exemplo: !soma 5 10\n\n"
+        "5. !hello\n"
+        "   O bot se apresenta brevemente.\n\n"
+        "6. !servidor\n"
         "   Disponibiliza o link de convite para o servidor.\n\n"
-        "**7. !pesquisa <tópico>**\n"
-        "   Faz uma pesquisa na Wikipedia sobre o tópico que você escolher. Por exemplo, `!pesquisa Python`."
+        "7. !pesquisa <tópico>\n"
+        "   Realiza uma busca na Wikipedia sobre o tópico desejado.\n"
+        "   Exemplo: !pesquisa Python\n"
+        "```"
     )
+    await ctx.send(message)
 
 bot.run('token')
