@@ -71,6 +71,42 @@ async def guess(ctx, number: int):
     else:
         await ctx.send(f'Errado! O número era {secret_number}. Tente novamente!')
 
+# Comando para criar uma enquete
+@bot.command(name='enquete')
+async def poll(ctx, *, question):
+    message = await ctx.send(f"📊 **Enquete**: {question}")
+    await message.add_reaction('👍')
+    await message.add_reaction('👎')
+    await message.add_reaction('🤷')
+
+# Comando para jogar cara ou coroa
+@bot.command(name='moeda')
+async def coin_flip(ctx):
+    moeda = random.choice(['Cara', 'Coroa'])
+    await ctx.send(f'🪙 Você jogou a moeda e deu **{moeda}**!')
+
+# Comando para escolher alguma opção
+@bot.command(name='escolher')
+async def choose(ctx, *choices: str):
+    if len(choices) < 2:
+        await ctx.send("❗ Você precisa fornecer pelo menos duas opções.")
+        return
+    choice = random.choice(choices)
+    await ctx.send(f'Eu escolho: **{choice}**')
+    
+# Comando para mostrar avatar
+@bot.command(name='avatar')
+async def avatar(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    await ctx.send(member.avatar.url)
+
+# Comando para apagar mensagens
+@bot.command(name='limpar')
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount: int):
+    await ctx.channel.purge(limit=amount)
+    await ctx.send(f'🧹 {amount} mensagens foram apagadas!', delete_after=5)
+
 # Comando para pesquisar um termo
 @bot.command(name='pesquisa')
 async def wiki(ctx, *, search_term):
