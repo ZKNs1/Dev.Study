@@ -85,6 +85,15 @@ async def coin_flip(ctx):
     moeda = random.choice(['Cara', 'Coroa'])
     await ctx.send(f'🪙 Você jogou a moeda e deu **{moeda}**!')
 
+# Comando para escolher alguma opção
+@bot.command(name='escolher')
+async def choose(ctx, *choices: str):
+    if len(choices) < 2:
+        await ctx.send("❗ Você precisa fornecer pelo menos duas opções.")
+        return
+    choice = random.choice(choices)
+    await ctx.send(f'Eu escolho: **{choice}**')
+    
 # Comando para pesquisar um termo
 @bot.command(name='pesquisa')
 async def wiki(ctx, *, search_term):
