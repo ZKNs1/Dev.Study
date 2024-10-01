@@ -100,6 +100,13 @@ async def avatar(ctx, member: discord.Member = None):
     member = member or ctx.author
     await ctx.send(member.avatar.url)
 
+# Comando para apagar mensagens
+@bot.command(name='limpar')
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount: int):
+    await ctx.channel.purge(limit=amount)
+    await ctx.send(f'🧹 {amount} mensagens foram apagadas!', delete_after=5)
+
 # Comando para pesquisar um termo
 @bot.command(name='pesquisa')
 async def wiki(ctx, *, search_term):
