@@ -93,7 +93,13 @@ async def choose(ctx, *choices: str):
         return
     choice = random.choice(choices)
     await ctx.send(f'Eu escolho: **{choice}**')
-    
+
+# Comando para mostrar avatar
+@bot.command(name='avatar')
+async def avatar(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    await ctx.send(member.avatar.url)
+
 # Comando para pesquisar um termo
 @bot.command(name='pesquisa')
 async def wiki(ctx, *, search_term):
