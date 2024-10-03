@@ -23,18 +23,23 @@ async def on_member_join(member):
 # Comando simples
 @bot.command(name='hello')
 async def hello(ctx):
-    await ctx.send(f'Olá! Eu sou o bot do Dev. Study, criado por _ytrnhx!')
+    await ctx.send(f'Olá! Eu sou o bot do Dev. Study, criado por `_ytrnhx!`')
 
 # Comando de reação
 @bot.command(name='react')
 async def react(ctx):
     await ctx.message.add_reaction('👍')
 
-# Comando de cálculo
+# Comandos de cálculos
 @bot.command(name='soma')
 async def add(ctx, a: int, b: int):
     result = a + b
     await ctx.send(f'O resultado de {a} + {b} é {result}.')
+
+@bot.command(name='sub')
+async def add(ctx, a: int, b: int):
+    result = a - b
+    await ctx.send(f'O resultado de {a} - {b} é {result}.')
 
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
