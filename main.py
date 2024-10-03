@@ -41,6 +41,11 @@ async def add(ctx, a: int, b: int):
     result = a - b
     await ctx.send(f'O resultado de {a} - {b} é {result}.')
 
+@bot.command(name='mult')
+async def add(ctx, a: int, b: int):
+    result = a * b
+    await ctx.send(f'O resultado de {a} * {b} é {result}.')
+    
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
 async def serverinfo(ctx):
