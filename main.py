@@ -72,13 +72,6 @@ async def serverinfo(ctx):
     server_name = guild.name
     await ctx.send(f'O servidor {server_name} tem {num_members} membros.')
 
-# Comando mencionando alguém específico
-@bot.command(name='test')
-async def mention_specific(ctx):
-    user_id = #ID do usuário;
-    user = await bot.fetch_user(user_id)
-    await ctx.send(f'O {user.mention} é legal!')
-
 # Rolar um dado
 @bot.command(name='dado')
 async def roll(ctx, sides: int):
