@@ -1,6 +1,7 @@
 import discord
 import random
 import aiohttp
+import math
 from discord.ext import commands
 
 # Configuração do bot
@@ -50,6 +51,18 @@ async def add(ctx, a: int, b: int):
 async def add(ctx, a: int, b: int):
     result = a / b
     await ctx.send(f'O resultado de {a} / {b} é {result}.')
+
+@bot.command(name='bhaskara')
+async def add(ctx, a: int, b: int, c: int):
+    delta = math.pow(b, 2) - (4*a*c)
+    result1 = (-b - math.sqrt(delta)) / (2*a)
+    result2 = (-b + math.sqrt(delta)) / (2*a)
+    if delta>0:
+        await ctx.send(f'O resultado de **b+** é {round(result2, 2)} e o de **b-** é {round(result1, 2)}');
+    if delta==0:
+        await ctx.send(f'O Delta é igual a 0, portanto não há raiz');
+    if delta<0:
+        await ctx.send(f'O Delta é negativo, portanto não há raiz');
 
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
