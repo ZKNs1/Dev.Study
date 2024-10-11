@@ -31,24 +31,24 @@ async def hello(ctx):
 async def react(ctx):
     await ctx.message.add_reaction('👍')
 
-# Comandos de cálculos
+# Comando de cálculo
 @bot.command(name='soma')
-async def add(ctx, a: int, b: int):
+async def add(ctx, a: float, b: float):
     result = a + b
     await ctx.send(f'O resultado de {a} + {b} é {result}.')
 
 @bot.command(name='sub')
-async def add(ctx, a: int, b: int):
+async def add(ctx, a: float, b: float):
     result = a - b
     await ctx.send(f'O resultado de {a} - {b} é {result}.')
 
 @bot.command(name='mult')
-async def add(ctx, a: int, b: int):
+async def add(ctx, a: float, b: float):
     result = a * b
     await ctx.send(f'O resultado de {a} * {b} é {result}.')
 
 @bot.command(name='div')
-async def add(ctx, a: int, b: int):
+async def add(ctx, a: float, b: float):
     result = a / b
     await ctx.send(f'O resultado de {a} / {b} é {result}.')
 
@@ -138,40 +138,130 @@ async def wiki(ctx, *, search_term):
             if 'title' in data and 'extract' in data:
                 title = data['title']
                 extract = data['extract']
-                await ctx.send(f"**{title}**\n{extract}")
+                page_url = data.get('content_urls', {}).get('desktop', {}).get('page', '')
+
+                embed = discord.Embed(
+                    title=f"📖 {title}",
+                    description=extract,
+                    color=discord.Color.light_embed()
+                )
+
+                if page_url:
+                    embed.add_field(name="🔗 Leia mais", value=f"[Clique aqui para ler mais]({page_url})", inline=False)
+
+                if 'thumbnail' in data:
+                    embed.set_thumbnail(url=data['thumbnail']['source'])
+                
+                await ctx.send(embed=embed)
+                embed.set_footer(text="Bot Dev. Study | Criado por _ytrnhx")
             else:
-                await ctx.send("Não encontrei informações sobre isso.")
+                await ctx.send("❌ Não encontrei informações sobre isso.")
 
 # Comando que retorna o link para o servidor
 @bot.command(name='servidor')
 async def hello(ctx):
     await ctx.send(f'Este é o link de convite para nosso servidor https://discord.gg/HvBbJvVbQ5')
 
+# Comando que retorna link para o github
+@bot.command(name='bot')
+async def bot(ctx):
+    await ctx.send(f'Este é o link para o código do bot https://github.com/ZKNs1/Dev.Study, neste repositório você terá acesso a todas as atualizações e ao código')
+
 @bot.command(name='comandos')
 async def comandos(ctx):
-    message = (
-        "**Comandos Disponíveis do Bot Dev. Study**\n"
-        "```"
-        "1. !dado <lados>\n"
-        "   Rola um dado com a quantidade de lados que você escolher.\n"
-        "   Exemplo: !dado 6\n\n"
-        "2. !adivinhe <número>\n"
-        "   O bot pensa em um número entre 1 e 10, e você precisa adivinhar.\n"
-        "   Exemplo: !adivinhe 5\n\n"
-        "3. !serverinfo\n"
-        "   Exibe o nome do servidor e o número de membros.\n\n"
-        "4. !soma <número1> <número2>\n"
-        "   Soma dois números que você escolher.\n"
-        "   Exemplo: !soma 5 10\n\n"
-        "5. !hello\n"
-        "   O bot se apresenta brevemente.\n\n"
-        "6. !servidor\n"
-        "   Disponibiliza o link de convite para o servidor.\n\n"
-        "7. !pesquisa <tópico>\n"
-        "   Realiza uma busca na Wikipedia sobre o tópico desejado.\n"
-        "   Exemplo: !pesquisa Python\n"
-        "```"
+    embed = discord.Embed(
+        title="📜 Comandos Disponíveis do Bot Dev. Study",
+        description="Aqui está a lista de comandos que você pode usar.",
+        color=discord.Color.light_embed()
     )
-    await ctx.send(message)
+
+    embed.add_field(
+        name="🎲 !dado `<lados>`",
+        value="Rola um dado com a quantidade de lados que você escolher.\n**Exemplo**: `!dado 6`",
+        inline=False
+    )
+    embed.add_field(
+        name="🔢 !adivinhe `<número>`",
+        value="O bot pensa em um número entre 1 e 10, e você deve adivinhar.\n**Exemplo**: `!adivinhe 5`",
+        inline=False
+    )
+    embed.add_field(
+        name="🪙 !moeda",
+        value="Joga uma moeda e retorna o resultado: **Cara** ou **Coroa**.",
+        inline=False
+    )
+    embed.add_field(
+        name="🎯 !escolher `<opção1>` `<opção2>` ...",
+        value="Escolhe uma entre várias opções fornecidas.\n**Exemplo**: `!escolher Pizza Burger Sushi`",
+        inline=False
+    )
+    embed.add_field(
+        name="📊 !enquete `<pergunta>`",
+        value="Cria uma enquete com reações de 👍, 👎 e 🤷.\n**Exemplo**: `!enquete Qual seu editor de texto favorito?`",
+        inline=False
+    )
+    embed.add_field(
+        name="🎨 !avatar `[membro]`",
+        value="Mostra o avatar de um membro. Se não for mencionado, mostra o seu próprio avatar.\n**Exemplo**: `!avatar @Melina`",
+        inline=False
+    )
+    embed.add_field(
+        name="➕ !soma `<número1>` `<número2>`",
+        value="Soma dois números que você escolher.\n**Exemplo**: `!soma 5 10`",
+        inline=False
+    )
+    embed.add_field(
+        name="➖ !sub `<número1>` `<número2>`",
+        value="Subtrai dois números que você escolher.\n**Exemplo**: `!sub 10 5`",
+        inline=False
+    )
+    embed.add_field(
+        name="✖️ !mult `<número1>` `<número2>`",
+        value="Multiplica dois números que você escolher.\n**Exemplo**: `!mult 5 3`",
+        inline=False
+    )
+    embed.add_field(
+        name="➗ !div `<número1>` `<número2>`",
+        value="Divide dois números que você escolher.\n**Exemplo**: `!div 10 2`",
+        inline=False
+    )
+    embed.add_field(
+        name="📐 !bhaskara `<a>` `<b>` `<c>`",
+        value="Resolve a equação de segundo grau usando a fórmula de Bhaskara.\n**Exemplo**: `!bhaskara 1 -5 6`",
+        inline=False
+    )
+    embed.add_field(
+        name="🔍 !pesquisa `<tópico>`",
+        value="Faz uma busca na Wikipedia sobre o tópico desejado.\n**Exemplo**: `!pesquisa Python`",
+        inline=False
+    )
+    embed.add_field(
+        name="🧹 !limpar `<quantidade>`",
+        value="Apaga uma quantidade específica de mensagens no canal.\n**Exemplo**: `!limpar 10`",
+        inline=False
+    )
+    embed.add_field(
+        name="👋 !hello",
+        value="O bot faz uma pequena apresentação sobre si mesmo.",
+        inline=False
+    )
+    embed.add_field(
+        name="📊 !serverinfo",
+        value="Exibe o nome do servidor e o número de membros.",
+        inline=False
+    )
+    embed.add_field(
+        name="🔗 !servidor",
+        value="Fornece o link de convite para o servidor DevStudy.",
+        inline=False
+    )
+    embed.add_field(
+        name="🤖 !bot",
+        value="Fornece o link para o repositório do bot Dev. Study no GitHub.",
+        inline=False
+    )
+    embed.set_footer(text="Bot Dev. Study | Criado por _ytrnhx")
+
+    await ctx.send(embed=embed)
 
 bot.run('token')
