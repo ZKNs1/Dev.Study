@@ -53,16 +53,19 @@ async def div(ctx, a: float, b: float):
     await ctx.send(f'O resultado de {a} / {b} é {result}.')
 
 @bot.command(name='bhaskara')
-async def bhaskara(ctx, a: int, b: int, c: int):
-    delta = math.pow(b, 2) - (4*a*c)
-    result1 = (-b - math.sqrt(delta)) / (2*a)
-    result2 = (-b + math.sqrt(delta)) / (2*a)
-    if delta>0:
-        await ctx.send(f'O resultado de **b+** é {round(result2, 2)} e o de **b-** é {round(result1, 2)}');
-    if delta==0:
-        await ctx.send(f'O Delta é igual a 0, portanto não há raiz');
+async def bhaskara_cmd(ctx, a: int, b: int, c: int):
+    delta = b**2 - 4*a*c
+    
     if delta<0:
         await ctx.send(f'O Delta é negativo, portanto não há raiz');
+    elif delta==0:
+        x = -b / (2 * a)
+        await ctx.send(f"⚠️ O Delta é 0, portanto há uma raiz real: {round(x, 2)}")
+    else:
+        raiz_delta = math.sqrt(delta)
+        x1 = (-b - raiz_delta) / (2 * a)
+        x2 = (-b + raiz_delta) / (2 * a)
+        await ctx.send(f'O resultado de **b+** é {round(x2, 2)} e o de **b-** é {round(x1, 2)}');
 
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
