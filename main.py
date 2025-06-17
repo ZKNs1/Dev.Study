@@ -33,27 +33,27 @@ async def react(ctx):
 
 # Comando de cálculo
 @bot.command(name='soma')
-async def add(ctx, a: float, b: float):
+async def sum(ctx, a: float, b: float):
     result = a + b
     await ctx.send(f'O resultado de {a} + {b} é {result}.')
 
 @bot.command(name='sub')
-async def add(ctx, a: float, b: float):
+async def sub(ctx, a: float, b: float):
     result = a - b
     await ctx.send(f'O resultado de {a} - {b} é {result}.')
 
 @bot.command(name='mult')
-async def add(ctx, a: float, b: float):
+async def mult(ctx, a: float, b: float):
     result = a * b
     await ctx.send(f'O resultado de {a} * {b} é {result}.')
 
 @bot.command(name='div')
-async def add(ctx, a: float, b: float):
+async def div(ctx, a: float, b: float):
     result = a / b
     await ctx.send(f'O resultado de {a} / {b} é {result}.')
 
 @bot.command(name='bhaskara')
-async def add(ctx, a: int, b: int, c: int):
+async def bhaskara(ctx, a: int, b: int, c: int):
     delta = math.pow(b, 2) - (4*a*c)
     result1 = (-b - math.sqrt(delta)) / (2*a)
     result2 = (-b + math.sqrt(delta)) / (2*a)
