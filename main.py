@@ -23,7 +23,7 @@ async def on_member_join(member):
 
 # Comando simples
 @bot.command(name='hello')
-async def hello(ctx):
+async def hello_cmd(ctx):
     await ctx.send(f'Olá! Eu sou o bot do Dev. Study, criado por `_ytrnhx!`')
 
 # Comando de reação
@@ -33,22 +33,22 @@ async def react(ctx):
 
 # Comando de cálculo
 @bot.command(name='soma')
-async def sum(ctx, a: float, b: float):
+async def soma_cmd(ctx, a: float, b: float):
     result = a + b
     await ctx.send(f'O resultado de {a} + {b} é {result}.')
 
 @bot.command(name='sub')
-async def sub(ctx, a: float, b: float):
+async def sub_cmd(ctx, a: float, b: float):
     result = a - b
     await ctx.send(f'O resultado de {a} - {b} é {result}.')
 
 @bot.command(name='mult')
-async def mult(ctx, a: float, b: float):
+async def mult_cmd(ctx, a: float, b: float):
     result = a * b
     await ctx.send(f'O resultado de {a} * {b} é {result}.')
 
 @bot.command(name='div')
-async def div(ctx, a: float, b: float):
+async def div_cmd(ctx, a: float, b: float):
     result = a / b
     await ctx.send(f'O resultado de {a} / {b} é {result}.')
 
@@ -69,7 +69,7 @@ async def bhaskara_cmd(ctx, a: int, b: int, c: int):
 
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
-async def serverinfo(ctx):
+async def serverinfo_cmd(ctx):
     guild = ctx.guild
     num_members = guild.member_count
     server_name = guild.name
@@ -77,7 +77,7 @@ async def serverinfo(ctx):
 
 # Rolar um dado
 @bot.command(name='dado')
-async def roll(ctx, sides: int):
+async def dado_cmd(ctx, sides: int):
     if sides < 1:
         await ctx.send("O número de lados deve ser maior que 0.")
         return
@@ -87,7 +87,7 @@ async def roll(ctx, sides: int):
 
 # Acertar número
 @bot.command(name='adivinhe')
-async def guess(ctx, number: int):
+async def adivinhe_cmd(ctx, number: int):
     secret_number = random.randint(1, 10)
     
     if number == secret_number:
@@ -97,7 +97,7 @@ async def guess(ctx, number: int):
 
 # Comando para criar uma enquete
 @bot.command(name='enquete')
-async def poll(ctx, *, question):
+async def enquete_cmd(ctx, *, question):
     message = await ctx.send(f"📊 **Enquete**: {question}")
     await message.add_reaction('👍')
     await message.add_reaction('👎')
@@ -105,13 +105,13 @@ async def poll(ctx, *, question):
 
 # Comando para jogar cara ou coroa
 @bot.command(name='moeda')
-async def coin_flip(ctx):
+async def moeda_cmd(ctx):
     moeda = random.choice(['Cara', 'Coroa'])
     await ctx.send(f'🪙 Você jogou a moeda e deu **{moeda}**!')
 
 # Comando para escolher alguma opção
 @bot.command(name='escolher')
-async def choose(ctx, *choices: str):
+async def escolher(ctx, *choices: str):
     if len(choices) < 2:
         await ctx.send("❗ Você precisa fornecer pelo menos duas opções.")
         return
@@ -120,14 +120,14 @@ async def choose(ctx, *choices: str):
 
 # Comando para mostrar avatar
 @bot.command(name='avatar')
-async def avatar(ctx, member: discord.Member = None):
+async def avatar_cmd(ctx, member: discord.Member = None):
     member = member or ctx.author
     await ctx.send(member.avatar.url)
 
 # Comando para apagar mensagens
 @bot.command(name='limpar')
 @commands.has_permissions(manage_messages=True)
-async def clear(ctx, amount: int):
+async def limpar_cmd(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     await ctx.send(f'🧹 {amount} mensagens foram apagadas!', delete_after=5)
 
@@ -162,16 +162,16 @@ async def wiki(ctx, *, search_term):
 
 # Comando que retorna o link para o servidor
 @bot.command(name='servidor')
-async def hello(ctx):
+async def servidor_cmd(ctx):
     await ctx.send(f'Este é o link de convite para nosso servidor https://discord.gg/HvBbJvVbQ5')
 
 # Comando que retorna link para o github
 @bot.command(name='bot')
-async def bot(ctx):
+async def bot_cmd(ctx):
     await ctx.send(f'Este é o link para o código do bot https://github.com/ZKNs1/Dev.Study, neste repositório você terá acesso a todas as atualizações e ao código')
 
 @bot.command(name='comandos')
-async def comandos(ctx):
+async def comandos_cmd(ctx):
     embed = discord.Embed(
         title="📜 Comandos Disponíveis do Bot Dev. Study",
         description="Aqui está a lista de comandos que você pode usar.",
