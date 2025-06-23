@@ -62,13 +62,13 @@ async def bhaskara_cmd(ctx, a: int, b: int, c: int):
 
     # Caso Delta seja negativo, não há raízes reais
     if delta < 0:
-        await ctx.send("❌ O Delta é negativo, portanto não há raiz real.")
+        await ctx.send("O Delta é negativo, portanto não há raiz real.")
         return
 
     # Caso Delta seja igual a zero, há uma raiz real
     elif delta == 0:
         x = -b / (2 * a)
-        await ctx.send(f"⚠️ O Delta é 0, portanto há uma única raiz real: {round(x, 2)}")
+        await ctx.send(f"O Delta é 0, portanto há uma única raiz real: {round(x, 2)}")
         
         # Geração de valores de x ao redor da raiz para desenhar o gráfico
         x_vals = np.linspace(x - 5, x + 5, 400)
@@ -190,9 +190,14 @@ async def avatar_cmd(ctx, member: discord.Member = None):
 # Comando para apagar mensagens
 @bot.command(name='limpar')
 @commands.has_permissions(manage_messages=True)
-async def limpar_cmd(ctx, amount: int):
-    await ctx.channel.purge(limit=amount)
-    await ctx.send(f'🧹 {amount} mensagens foram apagadas!', delete_after=5)
+async def limpar(ctx, quantidade: int):
+    await ctx.channel.purge(limit=quantidade + 1)
+    await ctx.send(f'🧹{quantidade} mensagens foram apagadas por {ctx.author.name}', delete_after=5)
+
+@limpar.error
+async def limpar_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("🚫 Você não tem permissão para usar este comando.")
 
 # Comando para pesquisar um termo
 @bot.command(name='pesquisa')
@@ -268,7 +273,7 @@ async def comandos_cmd(ctx):
     )
     embed.add_field(
         name="🎨 !avatar `[membro]`",
-        value="Mostra o avatar de um membro. Se não for mencionado, mostra o seu próprio avatar.\n**Exemplo**: `!avatar @Melina`",
+        value="Mostra o avatar de um membro. Se não for mencionado, mostra o seu próprio avatar.\n**Exemplo**: `!avatar @ytrnhx`",
         inline=False
     )
     embed.add_field(
