@@ -2,6 +2,9 @@ import discord
 import random
 import aiohttp
 import math
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 from discord.ext import commands
 
 # Configuração do bot
@@ -54,19 +57,79 @@ async def div_cmd(ctx, a: float, b: float):
 
 @bot.command(name='bhaskara')
 async def bhaskara_cmd(ctx, a: int, b: int, c: int):
+    # Calcula o valor de Delta
     delta = b**2 - 4*a*c
-    
-    if delta<0:
-        await ctx.send(f'O Delta é negativo, portanto não há raiz');
-    elif delta==0:
+
+    # Caso Delta seja negativo, não há raízes reais
+    if delta < 0:
+        await ctx.send("❌ O Delta é negativo, portanto não há raiz real.")
+        return
+
+    # Caso Delta seja igual a zero, há uma raiz real
+    elif delta == 0:
         x = -b / (2 * a)
-        await ctx.send(f"⚠️ O Delta é 0, portanto há uma raiz real: {round(x, 2)}")
+        await ctx.send(f"⚠️ O Delta é 0, portanto há uma única raiz real: {round(x, 2)}")
+        
+        # Geração de valores de x ao redor da raiz para desenhar o gráfico
+        x_vals = np.linspace(x - 5, x + 5, 400)
+        y_vals = a * x_vals**2 + b * x_vals + c  # Cálculo dos valores de y (parábola)
+
+        # Configuração do gráfico
+        plt.figure(figsize=(6, 4))  # Tamanho da figura
+        plt.axhline(0, color='gray', linewidth=1)  # Linha horizontal (eixo x)
+        plt.axvline(0, color='gray', linewidth=1)  # Linha vertical (eixo y)
+        plt.plot(x_vals, y_vals, label=f'{a}x² + {b}x + {c}', color='blue')  # Curva da equação
+        plt.scatter([x], [0], color='red', zorder=5)  # Ponto da raiz
+        plt.title('Gráfico da Equação do 2º Grau')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.grid(True)
+        plt.legend()
+
+        # Salva o gráfico como imagem
+        filename = 'grafico_bhaskara.png'
+        plt.savefig(filename)
+        plt.close()
+
+        # Envia a imagem no Discord
+        await ctx.send(file=discord.File(filename))
+
+        # Remove o arquivo do computador após envio
+        os.remove(filename)
+
+    # Caso Delta seja positivo, há duas raízes reais
     else:
         raiz_delta = math.sqrt(delta)
         x1 = (-b - raiz_delta) / (2 * a)
         x2 = (-b + raiz_delta) / (2 * a)
-        await ctx.send(f'O resultado de **b+** é {round(x2, 2)} e o de **b-** é {round(x1, 2)}');
+        await ctx.send(f" O Delta é {round(delta, 2)}. As raízes são:\n x₁ = {round(x1, 2)}\n x₂ = {round(x2, 2)}")
+        
+        # Geração de valores de x para plotar o gráfico da parábola
+        x_vals = np.linspace(x1 - 5, x2 + 5, 400)
+        y_vals = a * x_vals**2 + b * x_vals + c  # Equação y = ax² + bx + c
 
+        # Criação do gráfico
+        plt.figure(figsize=(6, 4))
+        plt.axhline(0, color='gray', linewidth=1)
+        plt.axvline(0, color='gray', linewidth=1)
+        plt.plot(x_vals, y_vals, label=f'{a}x² + {b}x + {c}', color='blue')  # Linha da parábola
+        plt.scatter([x1, x2], [0, 0], color='red', zorder=5)  # Pontos das raízes
+        plt.title('Gráfico da Equação do 2º Grau')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.grid(True)
+        plt.legend()
+
+        # Salva e envia o gráfico
+        filename = 'grafico_bhaskara.png'
+        plt.savefig(filename)
+        plt.close()
+
+        await ctx.send(file=discord.File(filename))
+
+        # Remove a imagem salva para não ocupar espaço
+        os.remove(filename)
+    
 # Comando de informações do servidor
 @bot.command(name='serverinfo')
 async def serverinfo_cmd(ctx):
